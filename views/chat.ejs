@@ -10,14 +10,21 @@
 <body>
     <h1>Mon super chat</h1>
     <div id="chat">
-    
+
     </div>
-    <form action="/send" method="post">
+    <form id="form" action="/send" method="post">
         <label for="chatEntry">Votre message</label>
         <input type="text" id="chatEntry" name="chatEntry" placeholder="veuilez entrer votre message" />
         <button type="submit">Envoyer</button>
     </form>
 
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:8080');
+        socket.on("chatEntry", function (test) {
+            alert(test);
+        })
+    </script>
 </body>
 
 </html>
