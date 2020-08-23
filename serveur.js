@@ -13,14 +13,17 @@ app.get('/',function(req,res){
     res.render('chat.ejs');
 })
 app.post("/send",function(req,res){
-    res.render(req.body['chatEntry']);
+    res.render("hello");
 })
 
 var io = require("socket.io").listen(server);
 
 io.sockets.on("connection",function(socket){
     console.log("un client s'est connecté");
-    socket.emit("chatEntry","hello");
+    socket.emit("test","hello");
+    socket.on("chatEntry",function(entry){
+        console.log(entry);
+    });
 })
 
 //app.listen(8080);

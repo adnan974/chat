@@ -21,8 +21,14 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:8080');
-        socket.on("chatEntry", function (test) {
+        socket.on("test", function (test) {
             alert(test);
+        })
+
+        var formElement = document.getElementById("form");
+        var inputChatElement = document.getElementById("chatEntry");
+        formElement.addEventListener("submit",function(){
+            socket.emit("chatEntry",inputChatElement.value);
         })
     </script>
 </body>
