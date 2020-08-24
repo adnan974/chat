@@ -11,20 +11,20 @@ var server = require("http").createServer(app);
 
 app.get('/',function(req,res){
     res.render('chat.ejs');
-})
-app.post("/send",function(req,res){
-    res.render("hello");
-})
+});
+app.post("/",function(req,res){
+   // res.render('chat.ejs');
+});
 
 var io = require("socket.io").listen(server);
 
 io.sockets.on("connection",function(socket){
     console.log("un client s'est connecté");
-    socket.emit("test","hello");
     socket.on("chatEntry",function(entry){
-        console.log(entry);
+        console.log("socket reception : "+entry);
+        socket.broadcast.emit('message',entry)
     });
-})
+});
 
 //app.listen(8080);
 server.listen(8080);

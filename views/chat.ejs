@@ -4,32 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon super Chat !</title>
+    <title>titre</title>
 </head>
 
 <body>
-    <h1>Mon super chat</h1>
+    <h1>titre</h1>
     <div id="chat">
 
     </div>
-    <form id="form" action="/send" method="post">
+   <!-- <form id="form" action="/" method="post">
         <label for="chatEntry">Votre message</label>
         <input type="text" id="chatEntry" name="chatEntry" placeholder="veuilez entrer votre message" />
-        <button type="submit">Envoyer</button>
-    </form>
+        <input type="submit" value="envoyer"/>
+    </form> -->
+    <label for="chatEntry">Votre message</label>
+    <input type="text" id="chatEntry" name="chatEntry" placeholder="veuilez entrer votre message" />
+    <button id="bouttonTest" >Envoyer</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:8080');
-        socket.on("test", function (test) {
-            alert(test);
+        
+
+      //  var formElement = document.getElementById("form");
+
+        var inputChatElement = document.getElementById("chatEntry");
+
+        var buttonTestElement = document.getElementById("bouttonTest");
+
+        var chat = document.getElementById("chat");
+
+        buttonTestElement.addEventListener("click",event => {
+            socket.emit("chatEntry",inputChatElement.value);
+            insertMessage(inputChatElement.value);
         })
 
-        var formElement = document.getElementById("form");
-        var inputChatElement = document.getElementById("chatEntry");
-        formElement.addEventListener("submit",function(){
+     /*   formElement.addEventListener("submit",function(){
             socket.emit("chatEntry",inputChatElement.value);
         })
+    */
+
+        socket.on("message",function(message){
+            insertMessage(message);
+            console.log("message recu");
+
+        })
+
+        function insertMessage(message){
+            var messageContainer = document.createElement('p');
+            messageContainer.className = "message";
+            var newmessage = document.createTextNode(message);
+            messageContainer.appendChild(newmessage);
+            chat.appendChild(messageContainer);
+        }
     </script>
 </body>
 
